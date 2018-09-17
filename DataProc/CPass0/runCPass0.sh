@@ -264,18 +264,18 @@ echo executing aliroot -l -b -q -x "recCPass0.C(\"$CHUNKNAME\", $nEvents, \"$ocd
 echo "" >&2
 echo "recCPass0.C" >&2
 timeStart=`date +%s`
-if [[ $USE_VALGRIND_MASSIF == 1 ]]; then
-  echo =========================
-  echo = USING VALGRIND MASSIF =
-  echo =========================
+if [[ $USE_VALGRIND_MEMCHECK == 1 ]]; then
+  echo ===========================
+  echo = USING VALGRIND MEMCHECK =
+  echo ===========================
   set -x
   valgrind                                         \
-    --tool=massif                                  \
+    --tool=memcheck                                \
+    --leak-check=full                              \
     --error-limit=no                               \
     --max-stackframe=3060888                       \
     --suppressions=$ROOTSYS/etc/valgrind-root.supp \
     --num-callers=40                               \
-    --massif-out-file=$PWD/massif_rec.log          \
     --log-file=$PWD/valgrind_rec.log               \
     aliroot -l -b -q -x "recCPass0.C(\"$CHUNKNAME\", $nEvents, \"$ocdbPath\", \"$triggerAlias\")" &> rec.log
   exitcode=$?

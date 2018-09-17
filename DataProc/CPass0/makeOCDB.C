@@ -13,6 +13,12 @@
 void makeOCDB(Int_t runNumber, TString  targetOCDBstorage="", TString sourceOCDBstorage="raw://", Int_t detectorBitsQualityFlag = -1)
 {
 
+  // https://root-forum.cern.ch/t/nan-in-ttree/3780/8
+  //gSystem->SetFPEMask(kAllMask);
+  std::cout << "=== YOU WANT TO ATTACH A DEBUGGER NOW ===" << std::endl
+            << "=== USE: gdb -p " << gSystem->GetPid() << std::endl;
+  gSystem->Sleep(10000); // 10 sec
+
   // in case there are some specific storages (for local testing)
   if (gSystem->AccessPathName("localOCDBaccessConfig.C", kFileExists)==0) {
 
